@@ -1,0 +1,118 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function myUid() {
+      return request.auth.uid;
+    }
+
+    // Looks up the caller's own profile document to check their role.
+    // NOTE: this costs one extra document read per rule evaluation that
+    // uses it ; acceptable at this app's scale, but worth knowing.
+    function myRole() {
+      return get(/databases/$(database)/documents/users/$(myUid())).data.role;
+    }
+
+    function isTeacher() {
+      return isSignedIn() && myRole() == 'teacher';
+    }
+
+    function isStudent() {
+      return isSignedIn() && myRole() == 'student';
+    }
+
+  
+    /* users/{uid} ; profile data                                        */
+  
+    match /users/{uid} {
+      // Any signed-in user can read profiles: students need teacher names
+      // on lessons, teachers need to list students.
+      allow read: if isSignedIn();
+
+      // A user may only create their OWN profile document, and only once,
+      // during registration.
+      allow create: if isSignedIn() && myUid() == uid && request.resource.data.uid == uid;
+
+      // A user may update their own profile, but never change their role
+      allow update: if isSignedIn() && myUid() == uid
+                    && request.resource.data.role == resource.data.role;
+
+      allow delete: if false;
+    }
+
+  
+    /* lessons/{lessonId}                                                 */
+  
+    match /lessons/{lessonId} {
+      
+      allow read: if isSignedIn();
+
+      allow create: if isTeacher() && request.resource.data.teacherId == myUid();
+
+      allow update, delete: if isTeacher() && resource.data.teacherId == myUid();
+    }
+
+  
+    /* attendance/{recordId}                                              */
+  
+    match /attendance/{recordId} {
+      allow read: if isSignedIn() && (
+        resource.data.studentId == myUid() || resource.data.teacherId == myUid()
+      );
+
+      // Only the teacher who owns the record may create/update it ; a
+      // student can never mark or change their own attendance.
+      allow create: if isTeacher() && request.resource.data.teacherId == myUid();
+      allow update: if isTeacher() && resource.data.teacherId == myUid();
+      allow delete: if false;
+    }
+
+  
+    /* permissionRequests/{requestId}                                      */
+  
+    match /permissionRequests/{requestId} {
+      allow read: if isSignedIn() && (
+        resource.data.studentId == myUid() || resource.data.teacherId == myUid()
+      );
+
+      // Only a student may create a request, only for themselves, and it
+      // must start "pending" ; they can't submit a pre-approved request.
+      allow create: if isStudent()
+                    && request.resource.data.studentId == myUid()
+                    && request.resource.data.status == 'pending';
+
+      // Only the owning teacher may change status (approve/deny). The
+      // student is never allowed to update their own request afterward.
+      allow update: if isTeacher() && resource.data.teacherId == myUid();
+      allow delete: if false;
+    }
+
+  
+    /* marks/{markId}                                                      */
+  
+    match /marks/{markId} {
+      allow read: if isSignedIn() && (
+        resource.data.studentId == myUid() || resource.data.teacherId == myUid()
+      );
+      allow create: if isTeacher() && request.resource.data.teacherId == myUid();
+      allow update, delete: if isTeacher() && resource.data.teacherId == myUid();
+    }
+
+  
+    /* notifications/{notificationId}                                      */
+  
+    match /notifications/{notificationId} {
+      // A user reads/marks-read only their own notifications.
+      allow read, update: if isSignedIn() && resource.data.userId == myUid();
+
+ 
+      allow create: if isSignedIn();
+      allow delete: if false;
+    }
+  }
+}
