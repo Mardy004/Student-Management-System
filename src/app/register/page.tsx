@@ -153,12 +153,6 @@ export default function RegisterPage() {
             Sign in
           </Link>
         </p>
-        <p className="mt-2 text-center text-sm text-ink/60">
-          Teacher or admin?{" "}
-          <Link href="/login?role=teacher" className="font-semibold text-primary">
-            Admin sign in
-          </Link>
-        </p>
       </div>
     </main>
   );

@@ -1,8 +1,21 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/teacher/page": "app/teacher/page.js",
+  "/login/page": "app/login/page.js",
+  "/register/page": "app/register/page.js",
+  "/register/teacher/page": "app/register/teacher/page.js",
+  "/teacher/attendance/page": "app/teacher/attendance/page.js",
+  "/student/page": "app/student/page.js",
+  "/student/attendance/page": "app/student/attendance/page.js",
+  "/student/marks/page": "app/student/marks/page.js",
+  "/student/notifications/page": "app/student/notifications/page.js",
   "/teacher/lessons/new/page": "app/teacher/lessons/new/page.js",
   "/teacher/marks/page": "app/teacher/marks/page.js",
+  "/student/permissions/page": "app/student/permissions/page.js",
+  "/teacher/lessons/[id]/page": "app/teacher/lessons/[id]/page.js",
+  "/student/calendar/page": "app/student/calendar/page.js",
   "/teacher/lessons/page": "app/teacher/lessons/page.js",
-  "/teacher/students/page": "app/teacher/students/page.js"
+  "/teacher/permissions/page": "app/teacher/permissions/page.js",
+  "/teacher/students/page": "app/teacher/students/page.js",
+  "/teacher/page": "app/teacher/page.js"
 }

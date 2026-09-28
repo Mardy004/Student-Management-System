@@ -157,10 +157,7 @@ export default function LoginPage() {
             </>
           ) : (
             <>
-              Teacher or admin?{" "}
-              <Link href="/login?role=teacher" className="font-semibold text-primary">
-                Admin sign in
-              </Link>
+  
             </>
           )}
         </p>

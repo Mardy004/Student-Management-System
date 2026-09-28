@@ -77,7 +77,6 @@ export default function HomePage() {
           <nav className="site-nav" aria-label="Main">
             <a href="#features">Features</a>
             <a href="#roles">Solutions</a>
-            <a href="/login?role=teacher">Admin sign in</a>
             <Link href="/login" className="site-nav-btn">
               Sign in
             </Link>
@@ -141,7 +140,6 @@ export default function HomePage() {
               </Link>
             </article>
             <article className="site-role-card site-role-card-alt">
-              <span className="site-role-tag">For teachers · Admin</span>
               <h3>Full control of your classes</h3>
               <ul>
                 <li><FiCheckCircle size={16} /> Create, edit and delete lessons</li>
@@ -149,9 +147,9 @@ export default function HomePage() {
                 <li><FiCheckCircle size={16} /> Record marks with written feedback</li>
                 <li><FiCheckCircle size={16} /> Track every student&rsquo;s progress</li>
               </ul>
-              <Link href="/login?role=teacher" className="site-role-link">
+              {/* <Link href="/login?role=teacher" className="site-role-link">
                 Admin sign in <FiArrowRight size={15} />
-              </Link>
+              </Link> */}
             </article>
           </div>
         </section>
@@ -163,9 +161,9 @@ export default function HomePage() {
             <Link href="/register" className="btn-primary">
               Get started
             </Link>
-            <Link href="/login?role=teacher" className="btn-secondary">
+            {/* <Link href="/login?role=teacher" className="btn-secondary">
               Admin sign in
-            </Link>
+            </Link> */}
           </div>
         </section>
       </main>
@@ -187,10 +185,10 @@ export default function HomePage() {
             <h4>Accounts</h4>
             <Link href="/login">Student sign in</Link>
             <Link href="/register">Create student account</Link>
-            <Link href="/login?role=teacher">Admin sign in</Link>
+            {/* <Link href="/login?role=teacher">Admin sign in</Link> */}
           </div>
         </div>
-        <div className="site-footer-bottom">
+        <div className="site-footer-bottom">Mardy
           <span>© {new Date().getFullYear()} Students Management. All rights reserved.</span>
         </div>
       </footer>
