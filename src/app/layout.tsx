@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Sora, Inter } from "next/font/google";
 import { AuthProvider } from "@/context/AuthContext";
 import ThemeToggle from "@/components/ThemeToggle";
-import "./globals.css";
+import "@/app/globals.css";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", weight: ["600", "700"] });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

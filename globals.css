@@ -339,6 +339,13 @@ html.dark option {
   background-color: #1c1624;
   color: #efe7ee;
 }
+.password-wrapper { position: relative; width: 100%; } .password-input { padding-right: 45px; } 
+.password-toggle { position: absolute; right: 12px; top: 50%; 
+  transform: translateY(-50%); display: flex; 
+  align-items: center; justify-content: center; 
+  border: none; background: transparent; color: #6b7280; 
+  cursor: pointer; padding: 4px; } 
+.password-toggle:hover { color: #111827; }
 
 /* ==========================================================================
    Floating theme toggle (react-icons inside) — navbar is left untouched.
