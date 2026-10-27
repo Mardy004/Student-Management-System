@@ -63,3 +63,8 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Next.js generated files
+.next/
+out/
+.node_modules/
